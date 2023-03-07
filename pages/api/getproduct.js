@@ -1,17 +1,17 @@
 import mysql from 'mysql';
 
 const connection = mysql.createConnection({
-    host: 'b0racqanolrqgpriliu4-mysql.services.clever-cloud.com',
-    user: 'us76jcsubc1iegua',
-    password: 'n6pB9ImtDnbITJu0nz2o',
-    database: 'b0racqanolrqgpriliu4'
+    host: 'bhlx1weti3atwzs7kao8-mysql.services.clever-cloud.com',
+    user: 'u7asgz1ebatrg0fe',
+    password: 'g2aI7ysAKenSqxUbrv1w',
+    database: 'bhlx1weti3atwzs7kao8'
 });
 
 
 export default async function handler(req, res) {
     if (req.method === 'GET') {
 
-        const sql = 'SELECT * FROM images WHERE id = 4';
+        const sql = `SELECT * FROM images WHERE id = ${req.query.id}`;
         connection.query(sql, function (err, result) {
             if (err) {
                 console.log(err);

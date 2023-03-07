@@ -12,20 +12,21 @@ export default function Home() {
   const [image, setImage] = useState(null);
 
   useEffect(() => {
-    fetch('/api/getproduct')
+    fetch('/api/getproduct?id=2')
       .then((response) => response.json())
       .then((data) => {
-        console.log(data);
-        const blob = new Blob([new Uint8Array(data.image.data)], { type: 'image/jpeg' })
-        const imageUrl = URL.createObjectURL(blob);
-        // URL.revokeObjectURL(imageUrl);
-        setImage(imageUrl);
-        console.log(imageUrl);
+        setImage(ConvertToImageUrl(data.image.data));
       })
       .catch((error) => {
         console.log(error);
       });
   }, []);
+
+  const ConvertToImageUrl = (bufferData) => {
+    const blob = new Blob([new Uint8Array(bufferData)], { type: 'image/jpeg' });
+    const imageUrl = URL.createObjectURL(blob);
+    return imageUrl;
+  }
 
   return (
     <>
@@ -37,14 +38,12 @@ export default function Home() {
       </Head>
       <main className={styles.main}>
         {
-          image &&
-          <div style={{ background: "red", "padding": "24px" }}>
-            <img src={image} alt="" />
-            <img src={image} alt="" />
-            <img src={image} alt="" />
-            <img src={image} alt="" />
-            <img src={image} alt="" />
-          </div>
+          image ?
+            <img src={image} width="80%" alt="" />
+            :
+            <span style={{ fontWeight: "bold", fontSize: "24px" }}>
+              Loading...
+            </span>
         }
 
       </main>
